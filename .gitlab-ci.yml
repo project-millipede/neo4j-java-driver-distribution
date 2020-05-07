@@ -26,7 +26,7 @@ deploy_artifacts:
   stage: deploy
   script:
     - mvn ${MAVEN_MODIFY_CLI_OPTS} clean install -f pom-modify.xml
-    - mvn ${MAVEN_CLI_OPTS} clean install deploy -P java9 -Dmaven.test.skip=true -Dmaven.javadoc.skip=true
+    - mvn ${MAVEN_CLI_OPTS} clean package deploy -P java9 -Dmaven.test.skip=true -Dmaven.javadoc.skip=true
   only:
     refs:
       - master
