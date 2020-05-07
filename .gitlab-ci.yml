@@ -1,5 +1,10 @@
 image: maven:3.6.3-jdk-11
 
+variables:
+  GIT_SUBMODULE_STRATEGY: normal
+  MAVEN_MODIFY_CLI_OPTS: "-s settings-modify.xml"
+  MAVEN_CLI_OPTS: "-s settings.xml"
+
 cache:
   paths:
     - ~/.m2/repository
