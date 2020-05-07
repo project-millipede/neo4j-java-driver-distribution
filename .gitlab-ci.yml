@@ -17,7 +17,7 @@ build_feature:
   stage: build
   script:
     - mvn ${MAVEN_MODIFY_CLI_OPTS} clean install -f pom-modify.xml
-    - mvn ${MAVEN_CLI_OPTS} clean install -Dmaven.javadoc.skip=true
+    - mvn ${MAVEN_CLI_OPTS} clean install -P java9 -Dmaven.test.skip=true -Dmaven.javadoc.skip=true
   except:
     refs:
       - master
@@ -26,7 +26,7 @@ deploy_artifacts:
   stage: deploy
   script:
     - mvn ${MAVEN_MODIFY_CLI_OPTS} clean install -f pom-modify.xml
-    - mvn ${MAVEN_CLI_OPTS} clean install deploy -Dmaven.javadoc.skip=true
+    - mvn ${MAVEN_CLI_OPTS} clean install deploy -P java9 -Dmaven.test.skip=true -Dmaven.javadoc.skip=true
   only:
     refs:
       - master
