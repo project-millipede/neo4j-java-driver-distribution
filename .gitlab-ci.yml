@@ -1,0 +1,27 @@
+image: maven:3.6.3-jdk-11
+
+cache:
+  paths:
+    - ~/.m2/repository
+
+stages:
+  - build
+  - deploy
+
+build_feature:
+  stage: build
+  script:
+    - mvn ${MAVEN_MODIFY_CLI_OPTS} clean install -f pom-modify.xml
+    - mvn ${MAVEN_CLI_OPTS} clean install -Dmaven.javadoc.skip=true
+  except:
+    refs:
+      - master
+
+deploy_artifacts:
+  stage: deploy
+  script:
+    - mvn ${MAVEN_MODIFY_CLI_OPTS} clean install -f pom-modify.xml
+    - mvn ${MAVEN_CLI_OPTS} clean install deploy -Dmaven.javadoc.skip=true
+  only:
+    refs:
+      - master
