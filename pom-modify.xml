@@ -4,16 +4,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.neo4j.driver</groupId>
-    <artifactId>neo4j-java-driver-osgi</artifactId>
+    <artifactId>neo4j-java-driver-osgi-modify</artifactId>
     <version>4.1-SNAPSHOT</version>
 
-    <name>Neo4j Java Driver OSGi - Modify</name>
+    <name>Neo4j :: Java :: Driver :: OSGi :: Modify</name>
 
     <packaging>pom</packaging>
 
     <properties>
-        <pomutils-maven-plugin.version>1.1.0</pomutils-maven-plugin.version>
+        <artifactId-modifier>neo4j-java-driver-osgi</artifactId-modifier>
+        <reactor-bom-modifier.version>3.3.1.RELEASE</reactor-bom-modifier.version>
         <pomFile-to-alter>neo4j-java-driver/pom.xml</pomFile-to-alter>
+
+        <pomutils-maven-plugin.version>1.1.0</pomutils-maven-plugin.version>
     </properties>
 
     <build>
@@ -32,9 +35,51 @@
                             </goals>
                             <configuration>
                                 <groupId>${project.groupId}</groupId>
-                                <artifactId>${project.artifactId}</artifactId>
+                                <artifactId>${artifactId-modifier}</artifactId>
                                 <version>${project.version}</version>
                                 <pomFile>${pomFile-to-alter}</pomFile>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>delete-reactor-bom</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>delete-dependency</goal>
+                            </goals>
+                            <configuration>
+                                <groupId>io.projectreactor</groupId>
+                                <artifactId>reactor-bom</artifactId>
+                                <version>Dysprosium-SR7</version>
+                                <pomFile>${pomFile-to-alter}</pomFile>
+                                <modifyDependencyManagement>true</modifyDependencyManagement>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>add-reactor-core</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>add-dependency</goal>
+                            </goals>
+                            <configuration>
+                                <groupId>io.projectreactor</groupId>
+                                <artifactId>reactor-core</artifactId>
+                                <version>${reactor-bom-modifier.version}</version>
+                                <pomFile>${pomFile-to-alter}</pomFile>
+                                <modifyDependencyManagement>true</modifyDependencyManagement>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>add-reactor-test</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>add-dependency</goal>
+                            </goals>
+                            <configuration>
+                                <groupId>io.projectreactor</groupId>
+                                <artifactId>reactor-test</artifactId>
+                                <version>${reactor-bom-modifier.version}</version>
+                                <pomFile>${pomFile-to-alter}</pomFile>
+                                <modifyDependencyManagement>true</modifyDependencyManagement>
                             </configuration>
                         </execution>
                     </executions>
