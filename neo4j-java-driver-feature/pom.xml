@@ -29,7 +29,7 @@
 
     <packaging>feature</packaging>
 
-    <name>Neo4j Java Driver Feature</name>
+    <name>Neo4j :: Java :: Driver :: Feature</name>
 
     <properties>
         <karaf-maven-plugin.version>4.3.0.RC1</karaf-maven-plugin.version>
