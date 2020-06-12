@@ -1,4 +1,4 @@
 [submodule "neo4j-java-driver"]
 	path = neo4j-java-driver
 	url = https://github.com/project-millipede/neo4j-java-driver.git
-	branch = Fix-OSGi
+	branch = Fix-OSGi-4.0
